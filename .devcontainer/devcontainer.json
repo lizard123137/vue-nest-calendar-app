@@ -7,7 +7,8 @@
 	"features": {
 		"ghcr.io/devcontainers-extra/features/angular-cli:2": {},
 		"ghcr.io/devcontainers-extra/features/nestjs-cli:2": {}
-	}
+	},
+	"forwardPorts": [4200]
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
