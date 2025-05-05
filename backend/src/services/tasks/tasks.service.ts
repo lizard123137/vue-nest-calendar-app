@@ -1,16 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { Task } from 'src/entities/tasks/task';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { CreateTaskRequest } from 'src/models/requests/tasks/models';
+import { Task } from 'src/models/schemas/task.schema';
 
 @Injectable()
 export class TasksService {
-  private readonly tasks: Task[] = [];
+  constructor(@InjectModel(Task.name) private taskModel: Model<Task>) {}
 
-  // TODO select by date from - to
-  findAll(): Task[] {
-    return this.tasks;
+  async findByDate(dateFrom: Date, dateTo: Date): Promise<Task[]> {
+    return this.taskModel
+      .find({
+        date: {
+          $gte: dateFrom,
+          $lte: dateTo,
+        },
+      })
+      .exec();
   }
 
-  create(task: Task) {
-    this.tasks.push(task);
+  async create(createTaskRequest: CreateTaskRequest): Promise<Task> {
+    const createdTask = new this.taskModel(createTaskRequest);
+    return createdTask.save();
   }
 }
