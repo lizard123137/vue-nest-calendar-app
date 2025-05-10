@@ -1,5 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
+import { TaskService } from "../../services/task.service";
+import { Task } from "../../models/task.model";
 
 @Component({
     selector: 'calendar',
@@ -8,6 +10,8 @@ import { Component } from "@angular/core";
     styleUrl: './calendar.component.scss'
 })
 export class CalendarComponent {
+    tasks: Task[] = [];
+
     daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     numberOfDays = 31;
     
@@ -15,7 +19,15 @@ export class CalendarComponent {
 
     weeks: (number | null)[][] = [];
 
-    constructor() {
+    constructor(private taskService: TaskService) {
+        const now = new Date();
+        const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);;
+        const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+        taskService.getTasks(monthStart, monthEnd).subscribe({
+            next: (tasks) => this.tasks = tasks
+        });
+        
         this.generateCalendar();
     }
 

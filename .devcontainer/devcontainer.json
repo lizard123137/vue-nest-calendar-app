@@ -8,7 +8,6 @@
 		"ghcr.io/devcontainers-extra/features/angular-cli:2": {},
 		"ghcr.io/devcontainers-extra/features/nestjs-cli:2": {}
 	},
-	"forwardPorts": [4200]
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "yarn install",
 
