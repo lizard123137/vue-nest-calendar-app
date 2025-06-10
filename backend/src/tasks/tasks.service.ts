@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateTaskRequest } from 'src/models/requests/tasks/models';
-import { Task } from 'src/models/schemas/task.schema';
+import { Task } from 'src/tasks/task.schema';
 
 @Injectable()
 export class TasksService {

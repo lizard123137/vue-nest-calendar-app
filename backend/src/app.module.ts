@@ -1,11 +1,15 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TasksController } from './controllers/tasks/tasks.controller';
-import { TasksService } from './services/tasks/tasks.service';
+import { TasksController } from './tasks/tasks.controller';
+import { TasksService } from './tasks/tasks.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Task, TaskSchema } from './models/schemas/task.schema';
-import { User, UserSchema } from './models/schemas/user.schema';
+import { Task, TaskSchema } from './tasks/task.schema';
+import { User, UserSchema } from './users/user.schema';
+import { AuthService } from './services/auth/auth.service';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
   imports: [
@@ -14,8 +18,11 @@ import { User, UserSchema } from './models/schemas/user.schema';
       { name: Task.name, schema: TaskSchema },
       { name: User.name, schema: UserSchema },
     ]),
+    AuthModule,
+    UsersModule,
+    TasksModule,
   ],
   controllers: [AppController, TasksController],
-  providers: [AppService, TasksService],
+  providers: [AppService, AuthService, TasksService],
 })
-export class AppModule {}
+export class AppModule { }

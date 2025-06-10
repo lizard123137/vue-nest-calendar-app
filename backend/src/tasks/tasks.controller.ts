@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ApiQuery } from '@nestjs/swagger';
 import { CreateTaskRequest } from 'src/models/requests/tasks/models';
-import { Task } from 'src/models/schemas/task.schema';
-import { TasksService } from 'src/services/tasks/tasks.service';
+import { Task } from 'src/tasks/task.schema';
+import { TasksService } from 'src/tasks/tasks.service';
 
 @Controller('tasks')
 export class TasksController {
