@@ -5,26 +5,15 @@
       <form @submit.prevent="handleLogin">
         <div class="mb-4">
           <label class="block text-sm font-medium mb-1">Email</label>
-          <input
-            v-model="email"
-            type="email"
-            required
-            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"
-          />
+          <input v-model="email" type="email" required
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500" />
         </div>
         <div class="mb-6">
           <label class="block text-sm font-medium mb-1">Password</label>
-          <input
-            v-model="password"
-            type="password"
-            required
-            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500"
-          />
+          <input v-model="password" type="password" required
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500" />
         </div>
-        <button
-          type="submit"
-          class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
-        >
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">
           Login
         </button>
       </form>
@@ -42,6 +31,8 @@ const password = ref('')
 const error = ref('')
 
 const handleLogin = async () => {
+  router.push("/calendar");
+
   error.value = ''
   try {
     const response = await fetch('http://localhost:3000/auth/login', {
