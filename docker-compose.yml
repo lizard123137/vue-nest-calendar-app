@@ -25,9 +25,19 @@ services:
       dockerfile: Dockerfile
     container_name: vue-frontend
     ports:
-      - "8080:8080"
+      - "8080:80"
     depends_on:
       - backend
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    volumes:
+      - ./frontend/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+    depends_on:
+      - frontend
 
 volumes:
   mongo-data:

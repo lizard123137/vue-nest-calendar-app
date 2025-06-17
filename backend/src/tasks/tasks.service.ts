@@ -6,21 +6,22 @@ import { Task } from 'src/tasks/task.schema';
 
 @Injectable()
 export class TasksService {
-  constructor(@InjectModel(Task.name) private taskModel: Model<Task>) {}
+  constructor(@InjectModel(Task.name) private taskModel: Model<Task>) { }
 
-  async findByDate(dateFrom: Date, dateTo: Date): Promise<Task[]> {
+  async findByDate(dateFrom: Date, dateTo: Date, userId: string): Promise<Task[]> {
     return this.taskModel
       .find({
         date: {
           $gte: dateFrom,
           $lte: dateTo,
         },
+        userId,
       })
       .exec();
   }
 
-  async create(createTaskRequest: CreateTaskRequest): Promise<Task> {
-    const createdTask = new this.taskModel(createTaskRequest);
+  async create(data: CreateTaskRequest & { userId: string }): Promise<Task> {
+    const createdTask = new this.taskModel(data);
     return createdTask.save();
   }
 }

@@ -6,7 +6,7 @@ import { TasksService } from './tasks/tasks.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Task, TaskSchema } from './tasks/task.schema';
 import { User, UserSchema } from './users/user.schema';
-import { AuthService } from './services/auth/auth.service';
+import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TasksModule } from './tasks/tasks.module';

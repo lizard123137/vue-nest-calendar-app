@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue'
-import axios from 'axios'
 import dayjs from 'dayjs'
+import api from '@/axios'
 
 const showModal = ref(false)
 const selectedDay = ref(null)
@@ -19,7 +19,7 @@ const tasks = ref([])
 
 onMounted(async () => {
   try {
-    const response = await axios.get('http://localhost:3000/tasks', {
+    const response = await api.get('/tasks', {
       params: {
         dateFrom: startOfMonth,
         dateTo: endOfMonth,
@@ -74,7 +74,7 @@ async function submitTask() {
   if (!newTaskTitle.value.trim()) return
 
   try {
-    const response = await axios.post('http://localhost:3000/tasks', {
+    const response = await api.post('/tasks', {
       description: newTaskTitle.value,
       date: selectedDay.value.date,
     })

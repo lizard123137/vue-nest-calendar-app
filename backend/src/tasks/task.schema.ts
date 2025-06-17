@@ -10,6 +10,9 @@ export class Task {
 
   @Prop()
   description: string;
+
+  @Prop({ required: true })
+  userId: string;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);

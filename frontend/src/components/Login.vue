@@ -1,3 +1,38 @@
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+// import axios from 'axios' // if you prefer axios instead of fetch
+
+const router = useRouter();
+
+const email = ref('')
+const password = ref('')
+const error = ref('')
+
+const handleLogin = async () => {
+  error.value = ''
+  try {
+    const response = await fetch('http://localhost:3000/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email.value, password: password.value })
+    })
+
+    if (!response.ok) {
+      const data = await response.json()
+      throw new Error(data.message || 'Login failed')
+    }
+
+    const result = await response.json()
+    localStorage.setItem('access_token', result.access_token);
+    router.push('/calendar')
+
+  } catch (err) {
+    error.value = err.message
+  }
+}
+</script>
+
 <template>
   <div class="min-h-screen flex items-center justify-center bg-gray-100">
     <div class="bg-white p-8 rounded shadow-md w-full max-w-sm">
@@ -21,36 +56,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-// import axios from 'axios' // if you prefer axios instead of fetch
-
-const email = ref('')
-const password = ref('')
-const error = ref('')
-
-const handleLogin = async () => {
-  router.push("/calendar");
-
-  error.value = ''
-  try {
-    const response = await fetch('http://localhost:3000/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email.value, password: password.value })
-    })
-
-    if (!response.ok) {
-      const data = await response.json()
-      throw new Error(data.message || 'Login failed')
-    }
-
-    const result = await response.json()
-    console.log('Login successful:', result)
-    // e.g., store token, redirect, etc.
-  } catch (err) {
-    error.value = err.message
-  }
-}
-</script>
