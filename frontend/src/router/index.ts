@@ -1,9 +1,15 @@
 import Calendar from '@/components/Calendar.vue'
 import Login from '@/components/Login.vue'
 import Register from '@/components/Register.vue'
+import Home from '@/components/Home.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home,
+  },
   {
     path: '/login',
     name: 'Login',

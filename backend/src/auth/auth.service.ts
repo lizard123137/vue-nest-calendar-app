@@ -26,14 +26,15 @@ export class AuthService {
             password: hashedPassword,
         });
 
-        const payload = { email: user.email, userId: user._id }
+        const payload = { email: user.email, userId: (user._id as unknown as { toString(): string }).toString() }
         return {
             access_token: this.jwtService.sign(payload),
         }
     }
 
     async login(user: any) {
-        const payload = { email: user.email, userId: user._id };
+        const payload = { email: user.email, userId: user._id.toString() };
+        console.log(payload);
         return {
             access_token: this.jwtService.sign(payload),
         };
@@ -42,7 +43,7 @@ export class AuthService {
     async validateUser(email: string, pass: string): Promise<any> {
         const user = await this.usersService.findOne(email);
         if (user && await bcrypt.compare(pass, user.password)) {
-            const { password, ...result } = user;
+            const { password, ...result } = user.toObject();
             return result;
         }
         return null;
